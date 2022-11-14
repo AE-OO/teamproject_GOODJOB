@@ -291,8 +291,17 @@
         <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
         <script>
             $(document).ready(function () {
-                $('#noticeContent').summernote({
-                    placeholder: '내용을 작성하세요',
+                $('#postContent').summernote({
+                    tabsize: 2,
+                    fontSizes: ['8','9','10','11','12','14','18','24','36'],
+                    toolbar: [
+                        ['font', ['fontname','fontsize','fontsizeunit']],
+                        ['fontstyle', ['bold','italic','underline','strikethrough','forecolor','backcolor','superscript','subscript','clear']],
+                        ['style', ['style']],
+                        ['paragraph', ['paragraph','height','ul','ol']],
+                        ['insert', ['table','hr','link','picture','video']],
+                        ['codeview'],
+                    ],
                     minHeight: 500,
                     maxHeight: null,
                     focus: true,

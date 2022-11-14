@@ -12,24 +12,27 @@
 
                     <!--                    <div class="ps-5 mt-2">-->
 
-                    <div class="d-flex flex-row carousel slide justify-content-center" id="carouselExampleIndicators" data-bs-ride="carousel">
+                    <div class="d-flex flex-row carousel slide justify-content-center" style="padding-left: 30px;padding-right: 30px" id="carouselExampleIndicators"
+                         data-bs-ride="carousel">
 
                         <div class="carousel-inner w-100 d-flex">
 
                             <th:block th:each="fileName:${dto.attachment}">
                                 <div class="carousel-item">
-                                    <!--                                        style="width: 50rem; height: 30rem"-->
-                                    <div class="p-0 m-0 embed-responsive embed-responsive-4by3 w-100 h-100 " >
-                                        <img th:src="@{/post/file/{fileName}(fileName=${fileName})}" class="d-block embed-responsive-item img-fluid h-100 w-100" alt="...">
+                                    <div class="p-0 m-0 embed-responsive embed-responsive-4by3 w-100 h-100 ">
+                                        <img th:src="@{/post/file/{fileName}(fileName=${fileName})}"
+                                             class="d-block embed-responsive-item img-fluid h-100 w-100" alt="...">
                                     </div>
                                 </div>
                             </th:block>
                         </div>
-                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                                data-bs-slide="prev">
                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                             <span class="visually-hidden">Previous</span>
                         </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                                data-bs-slide="next">
                             <span class="carousel-control-next-icon" aria-hidden="true"></span>
                             <span class="visually-hidden">Next</span>
                         </button>
@@ -44,7 +47,7 @@
                                             <h4> [[${dto.title}]] </h4>
                                         </div>
                                         <div class="d-flex">
-                                            <div class="p-0 text-center">
+                                            <div class="p-0 text-start">
                                                 <h6 class="">[[${dto.comName}]]</h6>
                                             </div>
                                             <div class="col-1 text-center p-0">
@@ -53,18 +56,18 @@
                                             <div class="col-2 p-0 text-center">
                                                 <h6 class="">[[${dto.salary}]]</h6>
                                             </div>
-                                            <div class="col-1 text-center p-0">
+                                            <div class="text-center p-0" style="width: 5%">
                                                 <h6>|</h6>
                                             </div>
-                                            <div class="col-2 p-0 text-center">
+                                            <div class="p-0 text-center">
                                                 <h6 class="">[[${dto.postGender}]] [[${dto.recruitNum}]]명</h6>
                                             </div>
-                                            <div class="col-1 text-center p-0">
+                                            <div class="text-center p-0" style="width: 5%">
                                                 <h6>|</h6>
                                             </div>
-<!--                                            <div class="col-1 p-0 text-center">-->
-<!--                                                <h6 class="">[[${dto.postGender}]]</h6>-->
-<!--                                            </div>-->
+                                            <!--                                            <div class="col-1 p-0 text-center">-->
+                                            <!--                                                <h6 class="">[[${dto.postGender}]]</h6>-->
+                                            <!--                                            </div>-->
                                         </div>
                                     </div>
                                 </div>
@@ -76,9 +79,7 @@
                         <div class="d-flex col flex-row">
                             <div class="d-flex flex-fill">
                                 <div class="col-12">
-                                    <!--                                        <div class="" style="min-height: 50rem;">-->
-                                    <div class="">
-                                        [[${dto.content}]]
+                                    <div class="" id="postContent">
                                     </div>
                                 </div>
                             </div>
@@ -116,7 +117,8 @@
                                             <h6 class="text-secondary">근무지역</h6>
                                         </div>
                                         <div class="col-10">
-                                            <h6 ><span class="post-details-postAddress">[[${dto.postAddress1}]]</span>[[${dto.postAddress2}]]</h6>
+                                            <h6><span class="post-details-postAddress">[[${dto.postAddress1}]]</span>[[${dto.postAddress2}]]
+                                            </h6>
                                         </div>
                                     </div>
                                 </div>
@@ -131,12 +133,6 @@
                                     <div class="map_wrap mb-4">
                                         <div id="map"
                                              style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
-                                        <!-- 지도타입 컨트롤 div 입니다 -->
-                                        <!--                                                <div class="custom_typecontrol radius_border">-->
-                                        <!--                                                    <span id="btnRoadmap" class="selected_btn" onclick="setMapType('roadmap')">지도</span>-->
-                                        <!--                                                    <span id="btnSkyview" class="btn" onclick="setMapType('skyview')">스카이뷰</span>-->
-                                        <!--                                                </div>-->
-                                        <!-- 지도 확대, 축소 컨트롤 div 입니다 -->
                                         <div class="custom_zoomcontrol radius_border">
                                                 <span onclick="zoomIn()"><img
                                                         src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_plus.png"
@@ -198,7 +194,13 @@
                                             <h6 class="text-secondary">모집 종료</h6>
                                         </th:block>
                                         <th:block th:if="${!dto.remainDay.contains('-')}">
-                                            <h6 class="text-secondary">[[${dto.remainDay}]]</h6>
+                                            <th:block th:if="${dto.remainDay.equals('0')}">
+                                                <h6 class="text-secondary">오늘 마감</h6>
+                                            </th:block>
+                                            <th:block th:if="${!dto.remainDay.equals('0')}">
+                                                <h6 class="text-secondary">D - [[${dto.remainDay}]]</h6>
+                                            </th:block>
+
                                         </th:block>
                                     </div>
                                     <div class="col-6">
@@ -221,7 +223,7 @@
                                 <div class="d-flex flex-fill mt-3">
                                     <th:block th:if="${existsPostInCompany}">
                                         <div class="d-flex flex-fill mt-3">
-                                            <th:block th:if="${#session.getAttribute('sessionId') == null}">
+                                            <th:block th:if="${#session.getAttribute('sessionId') eq null}">
                                                 <div class="col-6">
                                                     <button role="button" class="btn"
                                                             th:onclick="|location.href='@{/login}'|"
@@ -270,6 +272,17 @@
                                         </div>
                                     </th:block>
                                 </div>
+                                <th:block th:if="${existsPostByComLoginId}">
+                                    <div class="col-12 d-flex justify-content-center">
+                                        <div class="justify-content-center">
+                                            <a role="button" type="button" class="btn btn-primary"
+                                               th:href="@{/post/updatePost/{postId}(postId=${dto.postId})}"
+                                               style="color: #fff;  background-color: #0d6efd;  border-color: #0d6efd;">
+                                                수정하기
+                                            </a>
+                                        </div>
+                                    </div>
+                                </th:block>
                             </div>
                         </div>
                     </div>
@@ -278,13 +291,13 @@
             </div>
 
             <div class="post-wrappermt-5">
-                <div >
+                <div>
                     <div class="col-12 mt-5">
                         <div class="col-3">
                             <h4>추천공고</h4>
                         </div>
                     </div>
-                    <div class="d-flex flex-row col changePostDiv row row-cols-1 row-cols-md-4" >
+                    <div class="d-flex flex-row col changePostDiv row row-cols-1 row-cols-md-4">
 
 
                     </div>
@@ -383,6 +396,12 @@
                 });
             };
 
+        </script>
+        <script type="text/javascript" th:inline="javascript">
+            findContent = [[${dto.content}]];
+            tagetTag = document.getElementById('postContent');
+            tagetTag.innerHTML = findContent;
+            document.querySelector('#postContent').append(tagetTag);
         </script>
         <script type="text/javascript" th:inline="javascript">
             postDetailViewWithMap.init([[${dto}]]);

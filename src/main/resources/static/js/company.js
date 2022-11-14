@@ -1,5 +1,5 @@
 //22.10.19 ho - 마이페이지 js파일 + 다음 주소찾기 fuction
-
+//수정
 //Daum 주소 찾기API function
 function sample6_execDaumPostcode() {
     new daum.Postcode({
@@ -422,11 +422,15 @@ function btnRexExp() {
 
     //이메일 정규식 확인
     let result3 = "false";
-    if(!regExp3.test(emailCheck) || (emailCheck == null || emailCheck =="")) {
-        //Swal.fire("이메일 양식을 확인해주세요.","","error");
+
+    if(email2 == null || email2 == "") {
         $('#email2').focus();
     } else {
-        result3 = "true";
+        if(!regExp3.test(emailCheck)) {
+            $('#email').focus();
+        } else {
+            result3 = "true";
+        }
     }
 
     //이메일 중복 확인
@@ -574,7 +578,7 @@ function btn_change_info(){
     let emailCheck = email + "@" + email2;
     let regExp3 = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
 
-    //이메일 정규식 확
+    //이메일 정규식 확인
     let result3 = "false";
     if(!regExp3.test(emailCheck)){
         $('#email').focus();
@@ -584,7 +588,6 @@ function btn_change_info(){
 
     //이메일 중복 확인
     let result7 = "false";
-
 
     $.ajax({
         type: "post",

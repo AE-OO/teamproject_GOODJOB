@@ -72,7 +72,7 @@ public class HomeController {
     public ResponseEntity<PageResultDTO<Post, PostCardDTO>> getPagingPostList(@RequestBody PageRequestDTO pageRequestDTO) {
         log.info("================================="+pageRequestDTO);
         PageResultDTO<Post, PostCardDTO> result = postService.getPagingPostList(pageRequestDTO);
-//        result.getDtoList().forEach(e->log.info(e.getAttachmentFileName()));
+        log.info("=================="+result);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 

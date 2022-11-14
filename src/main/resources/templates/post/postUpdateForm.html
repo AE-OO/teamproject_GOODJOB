@@ -251,7 +251,7 @@
                                         <label class="m-1" for="postContent">공고내용</label>
                                         <textarea type="text" style="resize: none; min-height: 10rem" id="postContent"
                                                   class="flex-fill form-control input-group w-90"
-                                                  name="postContent">[[${dto.postContent}]]</textarea>
+                                                  name="postContent"></textarea>
                                         <label class="post-error-style-content post-error-style"></label>
                                     </div>
                                 </div>
@@ -278,10 +278,20 @@
         <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
         <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-        <script>
+        <script type="text/javascript" th:inline="javascript">
+
             $(document).ready(function () {
-                $('#noticeContent').summernote({
-                    placeholder: '내용을 작성하세요',
+                $('#postContent').summernote({
+                    tabsize: 2,
+                    fontSizes: ['8','9','10','11','12','14','18','24','36'],
+                    toolbar: [
+                        ['font', ['fontname','fontsize','fontsizeunit']],
+                        ['fontstyle', ['bold','italic','underline','strikethrough','forecolor','backcolor','superscript','subscript','clear']],
+                        ['style', ['style']],
+                        ['paragraph', ['paragraph','height','ul','ol']],
+                        ['insert', ['table','hr','link','picture','video']],
+                        ['codeview'],
+                    ],
                     minHeight: 500,
                     maxHeight: null,
                     focus: true,
@@ -365,6 +375,12 @@
                     }
                 }).open();
             }
+
+            findContent = [[${dto.postContent}]];
+            tagetTag = document.getElementById('postContent');
+            tagetTag.innerHTML = findContent;
+            // document.querySelector('#postContent').append(tagetTag);
+
             postUpdateForm.init();
         </script>
 

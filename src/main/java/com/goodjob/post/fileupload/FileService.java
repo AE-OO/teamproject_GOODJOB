@@ -75,7 +75,6 @@ public class FileService implements WebMvcConfigurer {
         return fileList;
     }
     public ResponseEntity<byte[]> getFile(String fileName) throws IOException {
-        log.info("fileName : "+fileName);
         ResponseEntity<byte[]> result = null;
         File file = new File(fileDir+fileName);
         HttpHeaders headers = new HttpHeaders();

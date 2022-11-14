@@ -52,11 +52,11 @@ public interface EntityDtoMapper {
         Date now = new Date();
         long difDay = (post.getPostEndDate().getTime()-now.getTime())/1000;
         String remainDay = String.valueOf(difDay/ (24*60*60));
-        remainDay = "D - "+remainDay;
+//        remainDay = remainDay; // D- 9, -1
         return PostDetailsDTO.builder()
                 .postId(post.getPostId())
                 .title(HtmlUtils.htmlUnescape(post.getPostTitle()))
-                .content(HtmlUtils.htmlUnescape(post.getPostContent()))
+                .content(post.getPostContent())
                 .startDate(post.getPostStartDate().toString())
                 .endDate(post.getPostEndDate().toString())
                 .remainDay(remainDay)
@@ -155,7 +155,7 @@ public interface EntityDtoMapper {
                 .postcode(post.getAddress().getZipCode())
                 .etc(HtmlUtils.htmlEscape(post.getAddress().getEtc()))
                 .postSalaryId(post.getPostSalary().getSalaryId())
-                .postContent(HtmlUtils.htmlEscape(post.getPostContent()))
+                .postContent(post.getPostContent())
                 .build();
     }
     default Post dtoToEntityForInsert(PostInsertDTO postInsertDTO, Occupation occ, Company com, PostSalary postSalary, List<UploadFile> uploadFileList,Address address){
@@ -164,7 +164,7 @@ public interface EntityDtoMapper {
             return Post.builder()
                     .postId(postInsertDTO.getId())
                     .postTitle(HtmlUtils.htmlEscape(postInsertDTO.getPostTitle()))
-                    .postContent(HtmlUtils.htmlEscape(postInsertDTO.getPostContent()))
+                    .postContent(postInsertDTO.getPostContent())
                     .postRecruitNum(HtmlUtils.htmlEscape(postInsertDTO.getPostRecruitNum()))
                     .postStartDate(postInsertDTO.getPostStartDate())
                     .postEndDate(postInsertDTO.getPostEndDate())
@@ -182,7 +182,7 @@ public interface EntityDtoMapper {
 
             return Post.builder()
                     .postTitle(HtmlUtils.htmlEscape(postInsertDTO.getPostTitle()))
-                    .postContent(HtmlUtils.htmlEscape(postInsertDTO.getPostContent()))
+                    .postContent(postInsertDTO.getPostContent())
                     .postRecruitNum(HtmlUtils.htmlEscape(postInsertDTO.getPostRecruitNum()))
                     .postStartDate(postInsertDTO.getPostStartDate())
                     .postEndDate(postInsertDTO.getPostEndDate())

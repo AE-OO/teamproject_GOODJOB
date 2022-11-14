@@ -289,4 +289,9 @@ public class postServiceImpl implements PostService {
     public Optional<Post> findOne(Long postId) {
         return postRepository.findById(postId);
     }
+
+    @Override
+    public boolean existsPostByPostIdAndPostComId(Long postId, Company company) {
+        return postRepository.existsPostByPostIdAndPostComId(postId, company);
+    }
 }

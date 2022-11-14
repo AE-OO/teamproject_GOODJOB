@@ -3,7 +3,6 @@ package com.goodjob.post.controller;
 import com.goodjob.bookmark.service.BookMarkService;
 import com.goodjob.company.Company;
 import com.goodjob.company.service.CompanyService;
-import com.goodjob.member.service.MemberService;
 import com.goodjob.post.Post;
 import com.goodjob.post.error.SessionCompanyAccountNotFound;
 import com.goodjob.post.error.SessionNotFoundException;
@@ -34,6 +33,7 @@ public class PostController {
     private final PostService postService;
     private final BookMarkService bookMarkService;
     private final FileService fileService;
+    private final CompanyService companyService;
 
     @GetMapping("/savePost")
     public String postSaveForm(String redirectedFrom, HttpServletRequest httpServletRequest, Model model) {
@@ -122,6 +122,8 @@ public class PostController {
         model.addAttribute("existsBookmarkByMember", existsBookmarkByMember);
         boolean existsCompanyOfPostIn = existsCompanyOfPostIn(postId);
         model.addAttribute("existsPostInCompany",existsCompanyOfPostIn);
+        boolean existsPostByComLoginId = postService.existsPostByPostIdAndPostComId(postId,companyService.loginIdCheck(sessionId).orElse(null));
+        model.addAttribute("existsPostByComLoginId",existsPostByComLoginId);
 
         PostDetailsDTO postDetailsDTO = postService.readPost(postId);
         model.addAttribute("dto", postDetailsDTO);

@@ -45,19 +45,22 @@ public class MemMyPageController {
         model.addAttribute("memberInfo",memberService.memInfo(id));
         return "member/myPageInfo";
     }
-
+   // 비밀번호 확인 메소드
+   private String checkPassword(String pw, String id) {
+       Optional<Member> mem = memberService.loginIdCheck(id);
+       if (mem.isPresent()) {
+           Member member = mem.get();
+           if (passwordEncoder.matches(pw,member.getMemPw())) {
+               return "0";
+           }
+       }
+       return "1";
+   }
    //개인정보 수정 시 비밀번호 확인
     @ResponseBody
     @PostMapping("/checkPW")
-    public String checkPW(@Param("pw")String pw, @Param("id")String loginId) {
-        Optional<Member> mem = memberService.loginIdCheck(loginId);
-        if (mem.isPresent()) {
-            Member member = mem.get();
-            if (passwordEncoder.matches(pw,member.getMemPw())) {
-                return "0";
-            }
-        }
-        return "1";
+    public String updatePwCheck(@Param("pw")String pw, @Param("id")String loginId) {
+       return checkPassword(pw,loginId);
     }
     @ResponseBody
     @RequestMapping(value="/myPageInfo",method = RequestMethod.GET)
@@ -73,10 +76,10 @@ public class MemMyPageController {
         return "redirect:/member/myPage";
     }
 
-    //회원탈퇴 (비밀번호 확인 후 회원 정보 삭제,이력서 정보 같이 삭제)
+    //회원탈퇴 (비밀번호 확인 후 회원 정보, 이력서 정보 같이 삭제)
     @ResponseBody
     @RequestMapping("/delete")
-    public String deleteMember(@Param("deletePw")String deletePw, @Param("id")String loginId, @Param("memId")Long memId,HttpSession session) {
+    public String deleteMember(@Param("pw")String deletePw, @Param("id")String loginId) {
         Optional<Member> mem = memberService.loginIdCheck(loginId);
         if (mem.isPresent()) {
             Member member = mem.get();
@@ -103,15 +106,8 @@ public class MemMyPageController {
     // 비밀번호 변경 전 기존 비밀번호 확인
     @PostMapping("/changePw")
     @ResponseBody
-    public String changePwCheck(@RequestParam("checkPw")String checkPw, @RequestParam("id")String loginId){
-        Optional<Member> mem = memberService.loginIdCheck(loginId);
-        if (mem.isPresent()) {
-            Member member = mem.get();
-            if (passwordEncoder.matches(checkPw,member.getMemPw())){
-                return "0";
-            }
-        }
-        return "1";
+    public String changePwCheck(@RequestParam("pw")String checkPw, @RequestParam("id")String loginId){
+        return checkPassword(checkPw,loginId);
     }
 
     // 비밀번호 변경

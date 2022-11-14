@@ -1,4 +1,5 @@
 package com.goodjob.post.service;
+import com.goodjob.company.Company;
 import com.goodjob.post.Post;
 import com.goodjob.post.occupation.Occupation;
 import com.goodjob.post.postdto.*;
@@ -35,5 +36,6 @@ public interface PostService extends EntityDtoMapper {
 
     // 오성훈 추가
     Optional<Post> findOne(Long postId);
+    boolean existsPostByPostIdAndPostComId(Long postId, Company company);
 
 }

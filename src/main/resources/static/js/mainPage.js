@@ -226,6 +226,7 @@ let searchPage = {
 
         document.addEventListener('scroll',onScroll,{signal:controller.signal})
         function onScroll () {
+            console.log("페이지 번호 갱신"+page)
             const occ = document.querySelector("#occSelect").value;
             const addr = document.querySelector("#addSelect").value;
             const sal = document.querySelector("#salarySelect").value;
@@ -234,8 +235,8 @@ let searchPage = {
             if((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
                 setTimeout(function(){
                     _this.insertPostListCard("infinite",page,8,"new",occ,addr,sal,keyword)
+                    page +=1;
                 }, 500)
-                page += 1;
             }
             if(document.querySelector(".empty_box")!==null){
                 controller.abort();
@@ -264,7 +265,6 @@ let searchPage = {
         const _this = this;
         const changeContentDiv = document.querySelector(`.${targetDomClassName}`);
 
-        // console.log(document.querySelector(".postDetailOccName").textContent)
         fetchJs.post(fetchJs.url, 'getPagingPostList', _this.pageRequestDTOForMainPage(page, size, sort, filterOccupation, filterAddress, filterSalary))
             .then(data => {
                 console.log(page+"<="+data.totalPage)
@@ -272,7 +272,6 @@ let searchPage = {
                     for (let dto of data.dtoList) {
                         changeContentDiv.appendChild(postJS.makePostListHtml(dto));
                     }
-                    searchPage.page +=1;
 
 
                 } else if(page > data.totalPage){

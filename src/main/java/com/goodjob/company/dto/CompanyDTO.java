@@ -28,6 +28,7 @@ import com.goodjob.company.Company;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 @ToString
@@ -41,11 +42,15 @@ public class CompanyDTO {
     //DTO 클래스에서는 조인컬럼이라도 필드 다 String이나 Long으로 받아야 함.
     @Size(min = 3, max = 15, message = "ID는 3~15자 사이여야 합니다.")
     @NotBlank(message = "사용자 ID는 필수항목입니다.")
+    @Pattern(regexp = "[a-z0-9_-]{3,15}"
+            ,message = "아이디는 3~15자의 영문 소문자와 숫자,특수기호(_),(-)만 사용 가능합니다.")
     //ho - 22.10.17 comLoginID -> loginId (로그인 폼 input name 통일. DTO 필드 loginId,pw 로 통일)
     private String loginId;
 
     @Size(min = 3, max = 25, message = "Password는 3~25자 사이여야 합니다.")
     @NotBlank(message = "비밀번호는 필수항목입니다.")
+    @Pattern(regexp="(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{3,25}",
+            message = "비밀번호는 3~25자로 최소 1개의 영문자, 숫자, 특수문자가 들어가야 합니다.")
     //ho - 22.10.17 comPw1 -> pw (로그인 폼 input name 통일. DTO 필드 loginId,pw 로 통일)
     private String pw;
 
@@ -58,10 +63,12 @@ public class CompanyDTO {
 
     private String comComdivName;
     @NotBlank
+    @Pattern(regexp="\\d{2,3}-\\d{3,4}-\\d{4}", message = "전화번호 형식이 맞지 않습니다. 다시 확인해주세요.")
     private String comPhone;
     @NotBlank
     private String comName;
     @NotBlank
+    @Pattern(regexp="\\d{3}-\\d{2}-\\d{5}", message = "사업자 등록번호 형식이 맞지 않습니다. 다시 확인해주세요.")
     private String comBusiNum; // 사업등록번호
     @NotBlank
     private String comInfo;
@@ -75,6 +82,8 @@ public class CompanyDTO {
 
     private String comAddress4;  // 회사주소(참고항목)
     @NotBlank
+    @Pattern(regexp="[0-9a-zA-Z]([-_.]?[0-9a-zA-Z]){2,25}"
+            , message = "이메일 형식이 맞지 않습니다. 다시 확인해주세요.")
     private String comEmail1;
     @NotBlank(message = "이메일을 선택해주세요.")
     private String comEmail2;

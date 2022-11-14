@@ -50,6 +50,11 @@ public class WebConfig implements WebMvcConfigurer {
                 .order(4)
                 .addPathPatterns("/resume/**","/status/**") // 세션필요한
                 .excludePathPatterns("/css/**","/js/**","/login","/*.css","/*.js","/assets/**");  //세션 없는
+
+        registry.addInterceptor(new LoginInterceptor())
+                .order(5)
+                .addPathPatterns("/post/**") // 세션필요한
+                .excludePathPatterns("/post/file/**","/post/readPost/**");  //세션 없는
     }
     // 썸머노트(텍스트 에디터)에 대한 요청 응답 핸들러
     @Override

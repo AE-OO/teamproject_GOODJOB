@@ -206,7 +206,7 @@ function infoUpdateCheck() {
     let email = $('#signUpEmail').val();
     let rs3 = "false";
     let emailtype = $('#emailNo').val();
-    let regExp2 = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])$/i;
+    let regExp2 = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z]){2,25}$/i;
     if (email == "" || emailtype == "no" ||!regExp2.test(email) ) {
         $('#signUpEmail').focus();
     } else {
@@ -256,7 +256,7 @@ function deleteMember() {
     $.ajax({
         type: "POST",
         url: "/member/delete",
-        data: "memId=" + $("#memId").val() + "&loginId=" + $("#id").val() + "&deletePw=" + $('#deletePw').val(),
+        data: "memId=" + $("#memId").val() + "&loginId=" + $("#id").val() + "&pw=" + $('#deletePw').val(),
         success: function (data) {
             if (data == "1") {
                 Swal.fire({
@@ -349,7 +349,7 @@ $(document).ready(function () {
         $.ajax({
             type: "post",
             url: "/member/changePw",
-            data: "id=" + $("#id").val() + "&checkPw=" + $('#checkPw').val(),
+            data: "id=" + $("#id").val() + "&pw=" + $('#checkPw').val(),
             success: function (data) {
                 if (data == "0") {
                     location.href = "/member/changePassword"

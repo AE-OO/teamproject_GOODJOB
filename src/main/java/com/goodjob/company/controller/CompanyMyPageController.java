@@ -43,15 +43,12 @@ public class CompanyMyPageController {
         String dbEmail = com.getComEmail();
 
         List<String> result2 = new ArrayList();
-        log.info("???DB에서 찾은 값 e: "+dbEmail+"======입력값: " +email);
 
         if(dbEmail.equals(email)) {
-            log.info("??? 같은 값이라고 이야기 할까? 과연? DB에 이메일 있나 체크" + dbEmail +"=======입력값:"+email);
             result2.add("mine");
         } else {
             String result = memberService.checkEmail(email);
             if(result == "com") {
-                log.info("??? 여기에 찍히고 있는건가? e가 아니면???" +dbEmail+"=======입력값"+email);
                 result2.add("com");
             } else if(result == "mem") {
                 result2.add("mem");
@@ -157,7 +154,6 @@ public class CompanyMyPageController {
 
         String comLoginId = getSessionLoginId(session).getComLoginId();
 
-        log.info("???: 패스워드 포스트까지는 넘어오나?");
         companyService.changePw(companyDTO,comLoginId);
 
         return "redirect:/com/myPage";
